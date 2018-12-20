@@ -1,65 +1,91 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center>
-    <v-flex
-      xs12
-      sm8
-      md6>
-      <div class="text-xs-center">
-        <logo/>
-        <vuetify-logo/>
+  <v-layout>
+    <div>
+      <video autoplay="autoplay" height="100%" width="100%" loop="loop" object-fit="fill">
+        <source src="http://cdn.moji.com/websrc/video/winter20181129.mp4" type="video/mp4">
+      </video>
+      <!-- <div class="content-left">
+        <p>
+          <pre>
+    懂生活
+      更懂你
+          </pre>
+        </p> -->
+      <!-- </div> -->
+      <div class="content-right">
+        <div class="content-right-top">
+          <span>地址</span>
+          <button v-on:click ='getCurrentWeather()'>查询</button>
+          <span>温度</span>
+          <span>天气</span>
+        </div>
+        <div class="content-right-middle">
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+          <div><p>sada</p></div>
+        </div>
+        <button>asda</button>
+        
       </div>
-      <v-card>
-        <v-card-title class="headline">Welcome to the Vuetify + Nuxt.js template</v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>For more information on Vuetify, check out the <a
-            href="https://vuetifyjs.com"
-            target="_blank">documentation</a>.</p>
-          <p>If you have questions, please join the official <a
-            href="https://chat.vuetifyjs.com/"
-            target="_blank"
-            title="chat">discord</a>.</p>
-          <p>Find a bug? Report it on the github <a
-            href="https://github.com/vuetifyjs/vuetify/issues"
-            target="_blank"
-            title="contribute">issue board</a>.</p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank">Nuxt Documentation</a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank">Nuxt GitHub</a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-            color="primary"
-            flat
-            nuxt
-            to="/inspire">Continue</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
+
+    </div>
   </v-layout>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
+import axios from 'axios'
 export default {
+  data () {
+    return {
+      str: ''
+    }
+  },
   components: {
-    Logo,
-    VuetifyLogo
+  },
+  mounted () {
+    this.getCurrentWeather()
+  },
+  methods: {
+    getCurrentWeather () {
+      axios.get('https://search.heweather.net/find?key=bd1e1c4008c547719209ee4c7ca9866c&cityid=CN101010100')
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
+<style scoped lang="less">
+.content-right {
+  position: fixed;
+  width: 35%;
+  height: 300px;
+  top: 70px;
+  right: 5%;
+  background-color: rgba(143, 143, 143, 0.479);
+}
+.content-right-top{
+  padding: 20px;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+.content-right-top{
+  span{
+    background: url('~/static/inco-location.png') no-repeat left center;
+    background-color: #6666;
+  }
+}
+.content-right-middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+</style>

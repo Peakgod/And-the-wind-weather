@@ -36,9 +36,9 @@
       <v-toolbar-title v-text="title"/>
     </v-toolbar>
     <v-content>
-      <v-container>
+      <div>
         <nuxt />
-      </v-container>
+      </div>
     </v-content>
     <v-navigation-drawer
       :right="right"
@@ -59,14 +59,14 @@
       :fixed="fixed"
       app
     >
-      <span>&copy; 2017</span>
+      <span>&copy; 2018 </span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       drawer: true,
       fixed: false,
@@ -74,7 +74,7 @@ export default {
         { icon: 'apps', title: '今日天气', to: '/' },
         { icon: 'bubble_chart', title: '未来筹募', to: '/inspire' }
       ],
-      miniVariant: false,
+      miniVariant: true,
       right: true,
       rightDrawer: false,
       title: '欢迎来到荼蘼天气'
