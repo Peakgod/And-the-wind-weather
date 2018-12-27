@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <div>
-      <video autoplay="autoplay" height="100%" width="100%" loop="loop" object-fit="fill">
+      <video class="content-video" autoplay="autoplay" loop="loop">
         <source src="http://cdn.moji.com/websrc/video/winter20181129.mp4" type="video/mp4">
       </video>
 
@@ -23,7 +23,7 @@
           </div>
 
           <div class="content-address-icon">
-            温馨提示：天气变凉注意保暖
+            温馨提示：{{clues}}
           </div>
         </div>
 
@@ -69,6 +69,7 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      clues: '天气变凉注意保暖',
       str: '',
       today: '',
       tomorrow: '',
@@ -83,7 +84,7 @@ export default {
   },
   methods: {
     getCurrentWeather () {
-      axios.get('https://search.heweather.net/find?key=bd1e1c4008c547719209ee4c7ca9866c&cityid=CN101010100')
+      axios.get('http://zhwnlapi.etouch.cn/Ecalender/api/v2/weather?date=20160105&citykey=101010100')
         .then(response => {
           console.log(response)
         })
@@ -119,6 +120,12 @@ export default {
       font-size: 30px;
     }
 
+  }
+  .content-video {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .content-right {
     position: fixed;
@@ -157,7 +164,7 @@ export default {
       }
   }
   .content-right-middle{
-    height: 170px;
+    height: 160px;
     margin: 0 60px;
     display: flex;
     flex-direction: row;
