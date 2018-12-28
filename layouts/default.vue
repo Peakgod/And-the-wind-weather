@@ -1,7 +1,6 @@
 <template>
   <v-app dark>
-    <v-toolbar
-    >
+    <v-toolbar>
       <v-toolbar-title v-text="title"/>
     </v-toolbar>
 
@@ -30,7 +29,7 @@ export default {
         { icon: 'apps', title: '今日天气', to: '/' },
         { icon: 'bubble_chart', title: '未来筹募', to: '/inspire' }
       ],
-      title: '欢迎来到荼蘼天气'
+      title: '欢迎来到小狐天气'
     }
   }
 }
@@ -43,5 +42,8 @@ export default {
 .theme--dark.application{
   background: none;
   color: rgb(255, 255, 255);
+}
+.v-toolbar__content, .v-toolbar__extension {
+  background-color: rgba(243, 243, 243, 0.3);
 }
 </style>

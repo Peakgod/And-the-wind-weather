@@ -26,8 +26,6 @@
       <v-btn color="#fff" flat nuxt to="/">返回</v-btn>
     </div>
 
-    <div id="lanren-r"></div>
-
     </div>
   </v-layout>
 </template>
@@ -108,16 +106,5 @@
 	from { -webkit-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); -moz-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); -ms-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1); }
 	to { -webkit-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(-360deg) scaleX(1) scaleY(1) scaleZ(1); -moz-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(-360deg) scaleX(1) scaleY(1) scaleZ(1); -ms-transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(-360deg) scaleX(1) scaleY(1) scaleZ(1); transform: translateX(0) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(-360deg) scaleX(1) scaleY(1) scaleZ(1); }
 }
-  
-  #lanren-r{
-  		width:156px;
-  		height:156px;
-  		margin:100px;
-  		background: url('../static/images/foxtail.png') no-repeat 0 0;
-  		animation:animate-tail 3.75s steps(44) infinite;
-  	}
-  	@keyframes animate-tail{
-  		0%{background-position:-6864px 0;}
-  		100%{background-position:0 0;}
-  	}
+
 </style>
