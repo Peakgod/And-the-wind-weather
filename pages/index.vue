@@ -29,9 +29,6 @@
                   </v-btn>
                   <v-toolbar-title>选择地址</v-toolbar-title>
                   <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn dark flat @click="dialog = false">Save</v-btn>
-                  </v-toolbar-items>
                 </v-toolbar>
                 <v-list three-line subheader>
                   <v-subheader>热门城市</v-subheader>
@@ -75,7 +72,7 @@
           <div class="middle-left middle-style">
 
             <h3>{{this.weatherDataOne.date}}</h3>
-            <img src="~/static/inco-weather/100.png"/>
+            <img :src="imgUrlToday"/>
             <p><span>{{this.weatherDataOne.tmp_min}}</span>℃~<span>{{this.weatherDataOne.tmp_max}}</span>℃</p>
             <div>{{this.weatherDataOne.cond_txt_d}}~{{this.weatherDataOne.cond_txt_n}}</div>
 
@@ -83,7 +80,7 @@
           <div class="middle-middle middle-style">
 
             <h3>{{this.weatherDataTow.date}}</h3>
-            <img src="~/static/inco-weather/310.png"/>
+            <img :src="imgUrlTom"/>
             <p><span>{{this.weatherDataTow.tmp_min}}</span>℃~<span>{{this.weatherDataTow.tmp_max}}</span>℃</p>
             <div>{{this.weatherDataTow.cond_txt_d}}~{{this.weatherDataTow.cond_txt_n}}</div>
 
@@ -91,7 +88,7 @@
           <div class="middle-right middle-style">
 
             <h3>{{this.weatherDataThree.date}}</h3>
-            <img src="~/static/inco-weather/200.png"/>
+            <img :src="imgUrlAft"/>
             <p><span>{{this.weatherDataThree.tmp_min}}</span>℃~<span>{{this.weatherDataThree.tmp_max}}</span>℃</p>
             <div>{{this.weatherDataThree.cond_txt_d}}~{{this.weatherDataThree.cond_txt_n}}</div>
 
@@ -123,6 +120,9 @@ import config from '~/assets/config.js'
 export default {
   data () {
     return {
+      imgUrlToday: '',
+      imgUrlTom: '',
+      imgUrlAft: '',
       clues: '天气变凉注意保暖',
       location: '无锡',
       str: '',
@@ -134,6 +134,7 @@ export default {
 
       hoCity: [],
       citySearchList: [],
+      weatherData: [],
       weatherDataOne: [],
       weatherDataTow: [],
       weatherDataThree: [],
@@ -188,10 +189,13 @@ export default {
       let location = `location=${this.location}&`
       axios.post(`${config.weather}${location}${config.key}`)
         .then(response => {
-          console.log(response.data.HeWeather6[0].daily_forecast)
-          this.weatherDataOne = response.data.HeWeather6[0].daily_forecast[0]
-          this.weatherDataTow = response.data.HeWeather6[0].daily_forecast[1]
-          this.weatherDataThree = response.data.HeWeather6[0].daily_forecast[2]
+          this.weatherData = response.data.HeWeather6[0].daily_forecast
+          this.weatherDataOne = this.weatherData[0]
+          this.weatherDataTow = this.weatherData[1]
+          this.weatherDataThree = this.weatherData[2]
+          this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherDataOne.cond_code_d}.png`)
+          this.imgUrlTom = require(`~/assets/inco-weather/${this.weatherDataTow.cond_code_d}.png`)
+          this.imgUrlAft = require(`~/assets/inco-weather/${this.weatherDataThree.cond_code_d}.png`)
         })
         .catch(error => {
           console.log(error)
@@ -234,7 +238,7 @@ export default {
     top: 80px;
     right: 5%;
     background-color: rgba(143, 143, 143, 0.479);
-      .content-right-top {
+     .content-right-top {
       padding: 20px 20px 5px;
       display: flex;
       flex-flow: row;
@@ -256,7 +260,7 @@ export default {
             width: 38px;
           }
         }
-      }
+      } 
   }
   .content-right-middle{
     height: 165px;
