@@ -1,15 +1,14 @@
 <template>
-  
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap justify-center>
       <v-flex xs12>
-        <v-card dark color="primary">
-          <v-card-text class="px-0">天气详情</v-card-text>
+        <v-card dark color="lighten-1">
           <div class="content-right-btn">
             <v-btn color="#fff" flat nuxt to="/">返回主页面</v-btn>
           </div>
         </v-card>
       </v-flex>
+
       <v-flex xs6>
         <v-card dark color="secondary">
           <v-card-text class="px-0">
@@ -17,100 +16,183 @@
             <div class="content-right-top-left">
               <div class="content-address" slot="activator" color="primary" dark>
                 <img src="~/static/inco-location.png"/>
-                <span>{{this.location}}dasdadd</span>
-                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-                <v-btn slot="activator" color="primary" dark>选择地址</v-btn>
-                <v-card>
-                 <v-toolbar dark color="primary">
-                   <v-btn icon dark @click="dialog = false">
-                     <v-icon>close</v-icon>
-                   </v-btn>
-                   <v-toolbar-title>选择地址</v-toolbar-title>
-                   <v-spacer></v-spacer>
-                 </v-toolbar>
-                 <v-list three-line subheader>
-                   <v-subheader>热门城市</v-subheader>
-                   <v-list-tile avatar>
-                     <div v-for="(item, index) in hoCity" :key="index">
-                       <v-btn v-on:click='selectCityWay(item.location)'>{{item.location}}</v-btn>
-                     </div>
-                   </v-list-tile>
-                 </v-list>
-                 <v-divider></v-divider>
-                 <v-list three-line subheader>
-                   <v-subheader>查询城市</v-subheader>
-                     <v-list-tile avatar>
-                       <div class="citySearchBtn">
-                         <input placeholder="请输入中文城市名查询" v-model="message"/>
-                         <v-btn v-on:click="citySearchWay()">查询城市</v-btn>
-                       </div>
-                     </v-list-tile>
-                 </v-list> 
-
-                 <v-divider></v-divider>
-                 <v-list three-line subheader>
-                   <v-subheader>全国城市</v-subheader>
-                     <v-list-tile avatar>
-                       <div v-for="(item, index) in citySearchList" :key="index">
-                         <v-btn v-on:click='selectCityWay(item.location)'>{{item.location}}</v-btn>
-                       </div>
-                     </v-list-tile>
-                 </v-list>
-                </v-card>
-                </v-dialog>
+                <span>{{this.location}}</span>
               </div>
 
               <div class="airQuality">
-                <div>空气质量：<span>良</span></div>
-                <div>PM2.5：<span>25</span></div>
+                <div>
+                  <div>空气质量：<span>良</span></div>
+                  <div>PM2.5：<span>25</span></div>
+                </div>
+
+                <div>
+                  <div>降水量<span>{{this.weatherData.pcpn}}</span></div>
+                  <div>降水率：<span>{{this.daily_forecast.pop}}%</span></div>
+                </div>
               </div>
 
               <div class="temperature">
-                <a><span>56</span>℃</a>
-                <img src="~/assets/inco-weather/100.png"/>
-                <a class="weatherIcon">晴天</a>
+                <a><span>{{this.weatherData.tmp}}</span>℃</a>
+                <div>
+                  <img :src="imgUrlToday"/>
+                  <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
+                </div>
               </div>
       
               <div class="firstRow">
                 <div class="humidity">
-                  <div>湿度：40</div>
-                  <div class="PrecipitationRate">降水率：0</div>
+                  <div>湿度：{{this.weatherData.hum}}</div>
+                  <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
+                </div>
+                <div class="windDirection">
+                  <div>风向：{{this.weatherData.wind_dir}}东南</div>
+                  <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
+                </div>
               </div>
-        
-              <div class="windDirection">
-                <div>风向：东南</div>
-                <div class="windSpeed">风速：千米每小时</div>
+
+              <div class="firstRow">
+                <div class="humidity">
+                  <div>日出</div>
+                  <div class="sunrise PrecipitationRate">12：00</div>
+                </div>
+                <div class="windDirection">
+                  <div>日落</div>
+                  <div class="windSpeed">16：00</div>
                 </div>
               </div>
 
               <div class="secondRow leftContentLayout">
               </div>
             </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs6>
+        <v-card dark color="secondary">
+          <v-card-text class="px-0">
+            <div class="right-table"> 
+              <v-data-table
+                :headers="header"
+                :items="dessert"
+                class="elevation-1"
+                hide-actions
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.name }}</td>
+                  <td class="text-xs-right">{{ props.item.calories }}</td>
+                  <td class="text-xs-right">{{ props.item.fat }}</td>
+                  <td class="text-xs-right">{{ props.item.carbs }}</td>
+                  <td class="text-xs-right">{{ props.item.protein }}</td>
+                  <td class="text-xs-right">{{ props.item.iron }}</td>
+                  <td class="text-xs-right">{{ props.item.sss }}</td>
+                  <td class="text-xs-right">{{ props.item.ddd }}</td>
+                  <td class="text-xs-right">{{ props.item.fff }}</td>
+                </template>
+              </v-data-table>
+            </div>
+
+            <div class="right-table-bottom">
+              <v-data-table
+                :headers="headers"
+                :items="desserts"
+                class="elevation-1"
+                hide-actions
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.name }}</td>
+                  <td class="text-xs-right">{{ props.item.calories }}</td>
+                  <td class="text-xs-right">{{ props.item.fat }}</td>
+                  <td class="text-xs-right">{{ props.item.carbs }}</td>
+                  <td class="text-xs-right">{{ props.item.protein }}</td>
+                  <td class="text-xs-right">{{ props.item.iron }}</td>
+                </template>
+              </v-data-table>
+            </div>
 
           </v-card-text>
         </v-card>
       </v-flex>
-       <v-flex xs6>
-        <v-card dark color="secondary">
-          <v-card-text class="px-0">撒旦</v-card-text>
-        </v-card>
-      </v-flex>
+
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import axios from 'axios'
+import config from '~/assets/config.js'
 export default {
   data () {
     return {
+      imgUrlToday: '',
       dialog: false,
       notifications: false,
       sound: true,
       widgets: false,
-
+      location: '无锡',
+      header: [
+        {
+          text: '逐小时天气',
+          sortable: false
+        },
+        { text: '01:00',
+          sortable: false },
+        { text: '04:00',
+          sortable: false },
+        { text: '07:00',
+          sortable: false },
+        { text: '10:00',
+          sortable: false },
+        { text: '13:00',
+          sortable: false },
+        { text: '16:00',
+          sortable: false },
+        { text: '19:00',
+          sortable: false },
+        { text: '22:00',
+          sortable: false }
+      ],
+      dessert: [
+        {
+          value: false,
+          name: '天气状况',
+          calories: '晴',
+          fat: '晴',
+          carbs: '晴',
+          protein: '晴',
+          iron: '晴',
+          sss: '晴',
+          ddd: '晴',
+          fff: '晴'
+        },
+        {
+          value: false,
+          name: '温度',
+          calories: 215,
+          fat: 215,
+          carbs: 215,
+          protein: 215,
+          iron: 215,
+          sss: 215,
+          ddd: 215,
+          fff: 215
+        },
+        {
+          value: false,
+          name: '相对湿度',
+          calories: 10,
+          fat: 10,
+          carbs: 10,
+          protein: 10,
+          iron: 10,
+          sss: 10,
+          ddd: 10,
+          fff: 10
+        }
+      ],
       headers: [
         {
-          text: '日期',
+          text: '未来三天天气预报',
           sortable: false
         },
         { text: '天气',
@@ -133,25 +215,38 @@ export default {
           carbs: 24,
           protein: 4.0,
           iron: '1%'
-        },
-        {
-          value: false,
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7% '
         }
-      ]
+      ],
+      weatherData: [],
+      lifestyle: [],
+      daily_forecast: [],
+      daily_forecasts: []
+    }
+  },
+  mounted () {
+    this.weatherForecast()
+  },
+  methods: {
+    // 默认的天气
+    weatherForecast () {
+      if (this.$route.params.location === undefined) {
+        this.location = this.location
+      } else {
+        this.location = this.$route.params.location
+      }
+      let locationt = `location=${this.location}&`
+      axios.post(`${config.weatherLive}${locationt}${config.key}`)
+        .then(response => {
+          this.weatherData = response.data.HeWeather6[0].now
+          this.lifestyle = response.data.HeWeather6[0].lifestyle
+          this.daily_forecast = response.data.HeWeather6[0].daily_forecast[0]
+          this.daily_forecasts = response.data.HeWeather6[0].daily_forecast
+          this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code}.png`)
+          console.log(this.WeatherData)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -165,51 +260,63 @@ export default {
     margin-left: 15%;
   }
   .content-right-top-left {
-    width: 50%;
     .airQuality{
       display: flex;
       flex-flow: row wrap;
-      justify-content: flex-end;
+      justify-content: space-around;
+      margin-top: 5%;
+      div {
+        display: inline;
+      }
     }
     .temperature {
-      margin-left: 25%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      margin-bottom: 5%;
+      div {
+        display: flex;
+        align-items: flex-end;
+      }
+      a {
+         font-size: 3em;
+      }
+      span {
+        font-size: 4em;
+      }
       .weatherIcon {
         font-size: 18px;
       }
     }
-    .temperature-right {
-      margin-right: auto;
-      div {
-        height: 55%;
-      }
-    }
     .firstRow {
-      margin-left: 25%;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       .humidity {
-        display: flex;
+        display: inherit;
       }
       .PrecipitationRate {
         margin-left: 15px;
       }
       .windDirection {
-        display: flex;
-        margin-right: 205px;
+        display: inherit;
         .windSpeed {
           margin-left: 20px;
         }
       }
     }
   }
-      .temperature {
-        a {
-          font-size: 3em;
-        }
-        span {
-          font-size: 4em;
-        }
-      }
+  .right-table {
+    padding: 0 10px;
+    height: 190px;
+    v-data-table {
+      padding: 0 10px;
+    }
+  }
+  .right-table-bottom {
+    padding: 0 10px;
+    margin-top: 59px;
+  }
+
 
     .content-right-bottom {
       width: 80%;
@@ -223,7 +330,7 @@ export default {
       display: flex;
       flex-flow: row;
       align-items: center;
-      margin-left: 25%;
+      margin-left: 10%;
       span {
         font-size: 25px;
         margin-right: 5px;

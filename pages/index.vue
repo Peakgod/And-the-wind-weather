@@ -96,7 +96,7 @@
         </div>
 
         <div class="content-right-btn">
-          <v-btn color="#fff" flat nuxt to="/inspire">更多+</v-btn>
+          <v-btn color="#fff" flat nuxt><nuxt-link  :to="{name: 'inspire', params: {location: this.location}}">更多+</nuxt-link></v-btn>
         </div>
         
       </div>
@@ -115,7 +115,6 @@
 
 <script>
 import axios from 'axios'
-// import moment from 'moment'
 import config from '~/assets/config.js'
 export default {
   data () {
@@ -141,8 +140,6 @@ export default {
       message: ''
     }
   },
-  components: {
-  },
   mounted () {
     this.hotCitySearchWay()
     this.weatherForecastWay()
@@ -158,14 +155,6 @@ export default {
           console.log(error)
         })
     },
-
-    // 获取时间(moment)
-    // getDate () {
-    //   this.today = moment().format('YYYY-' + 'MM-' + 'DD')
-    //   this.tomorrow = moment().add(1, 'days').format('YYYY-' + 'MM-' + 'DD')
-    //   this.afterTomorrow = moment().add(2, 'days').format('YYYY-' + 'MM-' + 'DD')
-    // },
-
     //  搜索城市
     citySearchWay () {
       let location = `location=${this.message}&`
