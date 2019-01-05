@@ -4,7 +4,7 @@
       <v-flex xs12>
         <v-card dark color="lighten-1">
           <div class="content-right-btn">
-            <v-btn color="#fff" flat nuxt to="/">返回主页面</v-btn>
+            <v-btn color="#fff" flat nuxt to="/">点击这里，返回主页面！</v-btn>
           </div>
         </v-card>
       </v-flex>
@@ -45,19 +45,17 @@
                   <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
                 </div>
                 <div class="windDirection">
-                  <div>风向：{{this.weatherData.wind_dir}}东南</div>
+                  <div>风向：{{this.weatherData.wind_dir}}</div>
                   <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
                 </div>
               </div>
 
               <div class="firstRow">
                 <div class="humidity">
-                  <div>日出</div>
-                  <div class="sunrise PrecipitationRate">12：00</div>
+                  <div>日出：{{this.daily_forecast.sr}}</div>
                 </div>
                 <div class="windDirection">
-                  <div>日落</div>
-                  <div class="windSpeed">16：00</div>
+                  <div>日落：{{this.daily_forecast.ss}}</div>
                 </div>
               </div>
 
@@ -100,17 +98,34 @@
                 hide-actions
               >
                 <template slot="items" slot-scope="props">
-                  <td>{{ props.item.name }}</td>
-                  <td class="text-xs-right">{{ props.item.calories }}</td>
-                  <td class="text-xs-right">{{ props.item.fat }}</td>
-                  <td class="text-xs-right">{{ props.item.carbs }}</td>
-                  <td class="text-xs-right">{{ props.item.protein }}</td>
-                  <td class="text-xs-right">{{ props.item.iron }}</td>
+                  <td>{{ props.item.date }}</td>
+                  <td class="text-xs-right">{{ props.item.cond_txt_d }}</td>
+                  <td class="text-xs-right">{{ props.item.tmp_max }}℃</td>
+                  <td class="text-xs-right">{{ props.item.tmp_min }}℃</td>
+                  <td class="text-xs-right">{{ props.item.wind_dir }}</td>
+                  <td class="text-xs-right">{{ props.item.hum }}</td>
+                  <td class="text-xs-right">{{ props.item.vis }}</td>
                 </template>
               </v-data-table>
             </div>
-
           </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12>
+        <v-card dark color="lighten-1">
+          <v-data-table
+              :headers="head"
+              :items="content"
+              class="elevation-1"
+              hide-actions
+            >
+            <template slot="items" slot-scope="props">
+              <td>{{ correspond[props.item.type] }}</td>
+              <td>{{ props.item.brf }}</td>
+              <td>{{ props.item.txt }}</td>
+            </template>
+          </v-data-table>
         </v-card>
       </v-flex>
 
@@ -197,34 +212,66 @@ export default {
         },
         { text: '天气',
           sortable: false },
-        { text: '气温',
+        { text: '最高气温',
+          sortable: false },
+        { text: '最低气温',
           sortable: false },
         { text: '风向',
           sortable: false },
         { text: '相对湿度',
           sortable: false },
-        { text: '能见度',
+        { text: '降水量',
           sortable: false }
       ],
       desserts: [
         {
           value: false,
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
+          cond_txt_d: '晴',
+          date: '2019.01.04',
+          tmp_max: 0,
+          tmp_min: 0,
+          wind_dir: 0,
+          pcpn: 0,
+          hum: 0,
+          vis: 0
+        }
+      ],
+      head: [
+        {
+          text: '生活指数',
+          sortable: false },
+        { text: '等级',
+          sortable: false },
+        { text: '温馨提示',
+          sortable: false }
+      ],
+      content: [
+        {
+          txt: '',
+          brf: '',
+          type: ''
         }
       ],
       weatherData: [],
       lifestyle: [],
       daily_forecast: [],
-      daily_forecasts: []
+      daily_forecasts: [],
+
+      correspond: {
+        comf: '舒适度指数',
+        cw: '洗车指数',
+        drsg: '穿衣指数',
+        flu: '感冒指数',
+        sport: '运动指数',
+        trav: '旅游指数',
+        uv: '紫外线指数',
+        air: '空气污染扩散条件指数'
+      }
     }
   },
   mounted () {
     this.weatherForecast()
+    this.hourWeather()
   },
   methods: {
     // 默认的天气
@@ -241,11 +288,30 @@ export default {
           this.lifestyle = response.data.HeWeather6[0].lifestyle
           this.daily_forecast = response.data.HeWeather6[0].daily_forecast[0]
           this.daily_forecasts = response.data.HeWeather6[0].daily_forecast
+          this.desserts = this.daily_forecasts
+          this.content = response.data.HeWeather6[0].lifestyle
           this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code}.png`)
-          console.log(this.WeatherData)
+          console.log(this.content, '======')
         })
         .catch(error => {
           console.log(error)
+          alert('请检查您的网络情况！')
+        })
+    },
+    hourWeather () {
+      if (this.$route.params.location === undefined) {
+        this.location = this.location
+      } else {
+        this.location = this.$route.params.location
+      }
+      let locationt = `location=${this.location}&`
+      axios.post(`${config.hourWeather}${locationt}${config.key}`)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+          alert('请检查您的网络情况ssssssssssssssss！')
         })
     }
   }
