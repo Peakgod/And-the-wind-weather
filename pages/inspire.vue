@@ -8,109 +8,109 @@
           </div>
         </v-card>
       </v-flex>
+      
+      <div class="middleContent">
+        <v-flex xs6>
+          <v-card dark color="secondary">
+            <v-card-text class="px-0">
 
-      <v-flex xs6>
-        <v-card dark color="secondary">
-          <v-card-text class="px-0">
-            
-            <div class="content-right-top-left">
-              <div class="content-address" slot="activator" color="primary" dark>
-                <img src="~/static/inco-location.png"/>
-                <span>{{this.location}}</span>
-              </div>
-
-              <div class="airQuality">
-                <div>
-                  <div>空气质量：<span>良</span></div>
-                  <div>PM2.5：<span>25</span></div>
+              <div class="content-right-top-left">
+                <div class="content-address" slot="activator" color="primary" dark>
+                  <img src="~/static/inco-location.png"/>
+                  <span>{{this.location}}</span>
                 </div>
+
+                <div class="airQuality">
+                  <div>
+                    <div>空气质量：<span>良</span></div>
+                    <div>PM2.5：<span>25</span></div>
+                  </div>
 
                 <div>
                   <div>降水量<span>{{this.weatherData.pcpn}}</span></div>
                   <div>降水率：<span>{{this.daily_forecast.pop}}%</span></div>
                 </div>
-              </div>
 
-              <div class="temperature">
-                <a><span>{{this.weatherData.tmp}}</span>℃</a>
-                <div>
-                  <img :src="imgUrlToday"/>
-                  <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
+                <div class="temperature">
+                  <a><span>{{this.weatherData.tmp}}</span>℃</a>
+                  <div>
+                    <img :src="imgUrlToday"/>
+                    <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
+                  </div>
+                </div>
+
+                <div class="firstRow">
+                  <div class="humidity">
+                    <div>湿度：{{this.weatherData.hum}}</div>
+                    <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
+                  </div>
+                  <div class="windDirection">
+                    <div>风向：{{this.weatherData.wind_dir}}</div>
+                    <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
+                  </div>
+                </div>
+
+                <div class="firstRow">
+                  <div class="humidity">
+                    <div>日出：{{this.daily_forecast.sr}}</div>
+                  </div>
+                  <div class="windDirection">
+                    <div>日落：{{this.daily_forecast.ss}}</div>
+                  </div>
+                </div>
+
                 </div>
               </div>
-      
-              <div class="firstRow">
-                <div class="humidity">
-                  <div>湿度：{{this.weatherData.hum}}</div>
-                  <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
-                </div>
-                <div class="windDirection">
-                  <div>风向：{{this.weatherData.wind_dir}}</div>
-                  <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
-                </div>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs6>
+          <v-card dark color="secondary">
+            <v-card-text class="px-0">
+              <div class="right-table"> 
+                <v-data-table
+                  :headers="header"
+                  :items="dessert"
+                  class="elevation-1"
+                  hide-actions
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                    <td class="text-xs-right">{{ props.item.calories }}</td>
+                    <td class="text-xs-right">{{ props.item.fat }}</td>
+                    <td class="text-xs-right">{{ props.item.carbs }}</td>
+                    <td class="text-xs-right">{{ props.item.protein }}</td>
+                    <td class="text-xs-right">{{ props.item.iron }}</td>
+                    <td class="text-xs-right">{{ props.item.sss }}</td>
+                    <td class="text-xs-right">{{ props.item.ddd }}</td>
+                    <td class="text-xs-right">{{ props.item.fff }}</td>
+                  </template>
+                </v-data-table>
               </div>
-
-              <div class="firstRow">
-                <div class="humidity">
-                  <div>日出：{{this.daily_forecast.sr}}</div>
-                </div>
-                <div class="windDirection">
-                  <div>日落：{{this.daily_forecast.ss}}</div>
-                </div>
+  
+              <div class="right-table-bottom">
+                <v-data-table
+                  :headers="headers"
+                  :items="desserts"
+                  class="elevation-1"
+                  hide-actions
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.date }}</td>
+                    <td class="text-xs-right">{{ props.item.cond_txt_d }}</td>
+                    <td class="text-xs-right">{{ props.item.tmp_max }}℃</td>
+                    <td class="text-xs-right">{{ props.item.tmp_min }}℃</td>
+                    <td class="text-xs-right">{{ props.item.wind_dir }}</td>
+                    <td class="text-xs-right">{{ props.item.hum }}</td>
+                    <td class="text-xs-right">{{ props.item.vis }}</td>
+                  </template>
+                </v-data-table>
               </div>
-
-              <div class="secondRow leftContentLayout">
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs6>
-        <v-card dark color="secondary">
-          <v-card-text class="px-0">
-            <div class="right-table"> 
-              <v-data-table
-                :headers="header"
-                :items="dessert"
-                class="elevation-1"
-                hide-actions
-              >
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.name }}</td>
-                  <td class="text-xs-right">{{ props.item.calories }}</td>
-                  <td class="text-xs-right">{{ props.item.fat }}</td>
-                  <td class="text-xs-right">{{ props.item.carbs }}</td>
-                  <td class="text-xs-right">{{ props.item.protein }}</td>
-                  <td class="text-xs-right">{{ props.item.iron }}</td>
-                  <td class="text-xs-right">{{ props.item.sss }}</td>
-                  <td class="text-xs-right">{{ props.item.ddd }}</td>
-                  <td class="text-xs-right">{{ props.item.fff }}</td>
-                </template>
-              </v-data-table>
-            </div>
-
-            <div class="right-table-bottom">
-              <v-data-table
-                :headers="headers"
-                :items="desserts"
-                class="elevation-1"
-                hide-actions
-              >
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.date }}</td>
-                  <td class="text-xs-right">{{ props.item.cond_txt_d }}</td>
-                  <td class="text-xs-right">{{ props.item.tmp_max }}℃</td>
-                  <td class="text-xs-right">{{ props.item.tmp_min }}℃</td>
-                  <td class="text-xs-right">{{ props.item.wind_dir }}</td>
-                  <td class="text-xs-right">{{ props.item.hum }}</td>
-                  <td class="text-xs-right">{{ props.item.vis }}</td>
-                </template>
-              </v-data-table>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-flex>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </div>
 
       <v-flex xs12>
         <v-card dark color="lighten-1">
@@ -412,6 +412,11 @@ export default {
       margin-right: 10%;
       margin-left: 10%;
       width: 50%;
+    }
+    @media( max-width: 1300px ){
+      .middleContent {
+        display: inline-table;
+      }
     }
 
 </style>
