@@ -5,11 +5,11 @@
         <v-card dark color="lighten-1">
           <div class="content-right-btn">
             <v-btn color="#fff" flat nuxt to="/">点击这里，返回主页面！</v-btn>
+            <v-btn color="#fff" flat nuxt to="/ssss">点击这里，返回主页面！</v-btn>
           </div>
         </v-card>
       </v-flex>
       
-      <div class="middleContent">
         <v-flex xs6>
           <v-card dark color="secondary">
             <v-card-text class="px-0">
@@ -26,40 +26,42 @@
                     <div>PM2.5：<span>25</span></div>
                   </div>
 
-                <div>
-                  <div>降水量<span>{{this.weatherData.pcpn}}</span></div>
-                  <div>降水率：<span>{{this.daily_forecast.pop}}%</span></div>
-                </div>
+                  <div class="temperature">
+                    <a><span>{{this.weatherData.tmp}}</span>℃</a>
+                    <div>
+                      <img :src="imgUrlToday"/>
+                      <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
+                    </div>
+                  </div>
 
-                <div class="temperature">
-                  <a><span>{{this.weatherData.tmp}}</span>℃</a>
                   <div>
-                    <img :src="imgUrlToday"/>
-                    <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
+                    <div>降水量<span>{{this.weatherData.pcpn}}</span></div>
+                    <div>降水率：<span>{{this.daily_forecast.pop}}%</span></div>
+                  </div>
+
+                 
+
+                  <div class="firstRow">
+                    <div class="humidity">
+                      <div>湿度：{{this.weatherData.hum}}</div>
+                      <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
+                    </div>
+                    <div class="windDirection">
+                      <div>风向：{{this.weatherData.wind_dir}}</div>
+                      <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
+                    </div>
+                  </div>
+
+                  <div class="secondRow">
+                    <div class="humidity">
+                      <div>日出：{{this.daily_forecast.sr}}</div>
+                    </div>
+                    <div class="windDirection">
+                      <div>日落：{{this.daily_forecast.ss}}</div>
+                    </div>
                   </div>
                 </div>
 
-                <div class="firstRow">
-                  <div class="humidity">
-                    <div>湿度：{{this.weatherData.hum}}</div>
-                    <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
-                  </div>
-                  <div class="windDirection">
-                    <div>风向：{{this.weatherData.wind_dir}}</div>
-                    <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
-                  </div>
-                </div>
-
-                <div class="firstRow">
-                  <div class="humidity">
-                    <div>日出：{{this.daily_forecast.sr}}</div>
-                  </div>
-                  <div class="windDirection">
-                    <div>日落：{{this.daily_forecast.ss}}</div>
-                  </div>
-                </div>
-
-                </div>
               </div>
             </v-card-text>
           </v-card>
@@ -110,7 +112,6 @@
             </v-card-text>
           </v-card>
         </v-flex>
-      </div>
 
       <v-flex xs12>
         <v-card dark color="lighten-1">
@@ -291,11 +292,10 @@ export default {
           this.desserts = this.daily_forecasts
           this.content = response.data.HeWeather6[0].lifestyle
           this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code}.png`)
-          console.log(this.content, '======')
         })
         .catch(error => {
           console.log(error)
-          alert('请检查您的网络情况！')
+          alert('请检查您的网络情况！sssdadadad')
         })
     },
     hourWeather () {
@@ -311,7 +311,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          alert('请检查您的网络情况ssssssssssssssss！')
+          alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
         })
     }
   }
@@ -331,9 +331,6 @@ export default {
       flex-flow: row wrap;
       justify-content: space-around;
       margin-top: 5%;
-      div {
-        display: inline;
-      }
     }
     .temperature {
       display: flex;
@@ -357,9 +354,6 @@ export default {
     .firstRow {
       display: flex;
       justify-content: space-around;
-      .humidity {
-        display: inherit;
-      }
       .PrecipitationRate {
         margin-left: 15px;
       }
@@ -412,11 +406,6 @@ export default {
       margin-right: 10%;
       margin-left: 10%;
       width: 50%;
-    }
-    @media( max-width: 1300px ){
-      .middleContent {
-        display: inline-table;
-      }
     }
 
 </style>
