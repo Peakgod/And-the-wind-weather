@@ -1,137 +1,22 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout row wrap justify-center>
-      <v-flex xs12>
-        <v-card dark color="lighten-1">
-          <div class="content-right-btn">
-            <v-btn color="#fff" flat nuxt to="/">点击这里，返回主页面！</v-btn>
-            <v-btn color="#fff" flat nuxt to="/ssss">点击这里，返回主页面！</v-btn>
-          </div>
-        </v-card>
-      </v-flex>
-      
-        <v-flex xs6>
-          <v-card dark color="secondary">
-            <v-card-text class="px-0">
-
-              <div class="content-right-top-left">
-                <div class="content-address" slot="activator" color="primary" dark>
-                  <img src="~/static/inco-location.png"/>
-                  <span>{{this.location}}</span>
-                </div>
-
-                <div class="airQuality">
-                  <div>
-                    <div>空气质量：<span>良</span></div>
-                    <div>PM2.5：<span>25</span></div>
-                  </div>
-
-                  <div class="temperature">
-                    <a><span>{{this.weatherData.tmp}}</span>℃</a>
-                    <div>
-                      <img :src="imgUrlToday"/>
-                      <a class="weatherIcon">{{this.weatherData.cond_txt}}天</a>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div>降水量<span>{{this.weatherData.pcpn}}</span></div>
-                    <div>降水率：<span>{{this.daily_forecast.pop}}%</span></div>
-                  </div>
-
-                 
-
-                  <div class="firstRow">
-                    <div class="humidity">
-                      <div>湿度：{{this.weatherData.hum}}</div>
-                      <div class="pressure PrecipitationRate">大气压强：{{this.weatherData.pres}}</div>
-                    </div>
-                    <div class="windDirection">
-                      <div>风向：{{this.weatherData.wind_dir}}</div>
-                      <div class="windSpeed">风速：{{this.weatherData.wind_spd}}千米每小时</div>
-                    </div>
-                  </div>
-
-                  <div class="secondRow">
-                    <div class="humidity">
-                      <div>日出：{{this.daily_forecast.sr}}</div>
-                    </div>
-                    <div class="windDirection">
-                      <div>日落：{{this.daily_forecast.ss}}</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-
-        <v-flex xs6>
-          <v-card dark color="secondary">
-            <v-card-text class="px-0">
-              <div class="right-table"> 
-                <v-data-table
-                  :headers="header"
-                  :items="dessert"
-                  class="elevation-1"
-                  hide-actions
-                >
-                  <template slot="items" slot-scope="props">
-                    <td>{{ props.item.name }}</td>
-                    <td class="text-xs-right">{{ props.item.calories }}</td>
-                    <td class="text-xs-right">{{ props.item.fat }}</td>
-                    <td class="text-xs-right">{{ props.item.carbs }}</td>
-                    <td class="text-xs-right">{{ props.item.protein }}</td>
-                    <td class="text-xs-right">{{ props.item.iron }}</td>
-                    <td class="text-xs-right">{{ props.item.sss }}</td>
-                    <td class="text-xs-right">{{ props.item.ddd }}</td>
-                    <td class="text-xs-right">{{ props.item.fff }}</td>
-                  </template>
-                </v-data-table>
-              </div>
-  
-              <div class="right-table-bottom">
-                <v-data-table
-                  :headers="headers"
-                  :items="desserts"
-                  class="elevation-1"
-                  hide-actions
-                >
-                  <template slot="items" slot-scope="props">
-                    <td>{{ props.item.date }}</td>
-                    <td class="text-xs-right">{{ props.item.cond_txt_d }}</td>
-                    <td class="text-xs-right">{{ props.item.tmp_max }}℃</td>
-                    <td class="text-xs-right">{{ props.item.tmp_min }}℃</td>
-                    <td class="text-xs-right">{{ props.item.wind_dir }}</td>
-                    <td class="text-xs-right">{{ props.item.hum }}</td>
-                    <td class="text-xs-right">{{ props.item.vis }}</td>
-                  </template>
-                </v-data-table>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-
-      <v-flex xs12>
-        <v-card dark color="lighten-1">
-          <v-data-table
-              :headers="head"
-              :items="content"
-              class="elevation-1"
-              hide-actions
-            >
-            <template slot="items" slot-scope="props">
-              <td>{{ correspond[props.item.type] }}</td>
-              <td>{{ props.item.brf }}</td>
-              <td>{{ props.item.txt }}</td>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
-
-    </v-layout>
-  </v-container>
+  <v-layout>
+    <div>
+      <div id="background" class="wall"></div>
+      <div id="midground" class="wall"></div>
+      <div id="foreground" class="wall"></div>
+      <div id="top" class="wall"></div>
+    </div>
+    <div class="container">
+      <div class="container-title">
+        <div>小狐天气</div>
+        <div>返回首页</div>
+      </div>
+      <div class="container-middle">
+        <div>form</div>
+        <div>img</div>
+      </div>
+    </div>
+  </v-layout>
 </template>
 
 <script>
@@ -311,7 +196,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
+          // alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
         })
     }
   }
@@ -320,92 +205,129 @@ export default {
 
 
 <style scoped lang="less">
-  .content-right-btn {
-    text-align: initial;
-    padding-top: 15px;
-    margin-left: 15%;
+  .wall{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
-  .content-right-top-left {
-    .airQuality{
+    #background{
+      background: url("../static/images/preview.jpg")no-repeat;
+      -webkit-animation: dd 100s linear infinite;
+      -moz-animation: dd 100s linear infinite;
+      -o-animation: dd 100s linear infinite;
+      animation: dd 100s linear infinite;
+      background-size: cover;
+  }
+  #midground{
+      background: url("../static/images/midground.png");
+      z-index: 1;
+      -webkit-animation: cc 100s linear infinite;
+      -moz-animation: cc 100s linear infinite;
+      -o-animation: cc 100s linear infinite;
+      animation: cc 100s linear infinite;
+  }
+  #foreground{
+      background: url("../static/images/foreground.png");
+      z-index: 2;
+      -webkit-animation: cc 153s linear infinite;
+      -o-animation: cc 153s linear infinite;
+      -moz-animation: cc 153s linear infinite;
+      animation: cc 153s linear infinite;
+  }
+  #top{
+      background-image: url("../static/images/midground.png");
+      z-index: 4;
+      -webkit-animation: dd 100s linear infinite;
+      -o-animation: dd 100s linear infinite;
+      animation: da 100s linear infinite;
+  }
+  @-webkit-keyframes cc {
+      from{
+          background-position: 0 0;
+          transform: translateY(10px);
+      }
+      to{
+          background-position: 600% 0;
+      }
+  }
+  @-o-keyframes cc {
+      from{
+          background-position: 0 0;
+          transform: translateY(10px);
+      }
+      to{
+          background-position: 600% 0;
+      }
+  }
+  @-moz-keyframes cc {
+      from{
+          background-position: 0 0;
+          transform: translateY(10px);
+      }
+      to{
+          background-position: 600% 0;
+      }
+  }
+  @keyframes cc {
+      0%{
+          background-position: 0 0;
+      }
+      100%{
+          background-position: 600% 0;
+      }
+  }
+  
+  @keyframes da {
+      0%{
+          background-position: 0 0;
+      }
+      100%{
+          background-position: 0 600%;
+      }
+  }
+  @-webkit-keyframes da {
+      0%{
+          background-position: 0 0;
+      }
+      100%{
+          background-position: 0 600%;
+      }
+  }
+  @-moz-keyframes da {
+      0%{
+          background-position: 0 0;
+      }
+      100%{
+          background-position: 0 600%;
+      }
+  }
+  @-ms-keyframes da {
+      0%{
+          background-position: 0 0;
+      }
+      100%{
+          background-position: 0 600%;
+      }
+  }
+  .container {
+    background-image: url('../static/bgc.png');
+    z-index: 7;
+    height: 380px;
+    opacity: 0.7;
+    .container-title {
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
-      margin-top: 5%;
+      line-height: 60px;
     }
-    .temperature {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      margin-bottom: 5%;
-      div {
-        display: flex;
-        align-items: flex-end;
-      }
-      a {
-         font-size: 3em;
-      }
-      span {
-        font-size: 4em;
-      }
-      .weatherIcon {
-        font-size: 18px;
-      }
-    }
-    .firstRow {
-      display: flex;
-      justify-content: space-around;
-      .PrecipitationRate {
-        margin-left: 15px;
-      }
-      .windDirection {
-        display: inherit;
-        .windSpeed {
-          margin-left: 20px;
-        }
-      }
-    }
-  }
-  .right-table {
-    padding: 0 10px;
-    height: 190px;
-    v-data-table {
-      padding: 0 10px;
-    }
-  }
-  .right-table-bottom {
-    padding: 0 10px;
-    margin-top: 59px;
-  }
-
-
-    .content-right-bottom {
-      width: 80%;
-      margin-left: 10%;
-      margin-top: 15px;
+    .container-middle {
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
+      text-align: center;
+      height: 280px;
     }
-    .content-address {
-      display: flex;
-      flex-flow: row;
-      align-items: center;
-      margin-left: 10%;
-      span {
-        font-size: 25px;
-        margin-right: 5px;
-      }
-      img {
-        margin-right: 5px;
-        margin-left: 5px;
-        padding: 4px;
-        width: 38px;
-      }
-    }
-    .right-form {
-      margin-right: 10%;
-      margin-left: 10%;
-      width: 50%;
-    }
-
+  }
 </style>

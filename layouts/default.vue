@@ -1,9 +1,5 @@
 <template>
   <v-app dark>
-    <v-toolbar>
-      <v-toolbar-title v-text="title"/>
-    </v-toolbar>
-
     <v-content>
       <div>
         <nuxt />
