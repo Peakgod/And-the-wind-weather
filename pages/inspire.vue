@@ -1,20 +1,78 @@
 <template>
   <v-layout>
-    <div>
-      <div id="background" class="wall"></div>
-      <div id="midground" class="wall"></div>
-      <div id="foreground" class="wall"></div>
-      <div id="top" class="wall"></div>
+    <div class="bgi">
     </div>
-    <div class="container">
+
+    <div class="container-bg">
       <div class="container-title">
-        <div>小狐天气</div>
-        <div>返回首页</div>
+        <div>当前位置</div>
+        <div>点击这里，返回首页</div>
       </div>
       <div class="container-middle">
-        <div>form</div>
-        <div>img</div>
+        <div>{{this.weatherData.date}}</div>
+        <div class="secondLine">
+            <span>{{this.weatherData.tmp_min}}~{{this.weatherData.tmp_max}}</span>
+            ℃
+        </div>
+        
+        <div class="weather-icon">
+          <img :src="imgUrlToday">
+        </div>
+
+        <div class="weather-three">
+          <img src="~/static/select.png"/>
+          <span class="margin-span">{{this.weatherData.wind_dir}}<span>&nbsp;&nbsp;&nbsp;</span>{{this.weatherData.wind_sc}}级</span>
+          <span class="margin-span">湿度<span>&nbsp;&nbsp;&nbsp;</span>{{this.weatherData.hum}}%</span>
+          <span class="margin-span">气压<span>&nbsp;&nbsp;&nbsp;</span>{{this.weatherData.pres}}hPa</span>
+        </div>
+        <div class="clues">提示语：{{this.lifestyle}}</div>
       </div>
+    </div>
+
+    <div class="container-table">
+      <span>
+        <v-data-table
+          :headers="head"
+          :items="dessertItem"
+          class="elevation-1"
+        >
+          <template slot="items" slot-scope="props">
+            <td class="text-xs-right" >{{ props.item.time }}</td>
+            <td class="text-xs-right" >{{ props.item.cond_txt }}</td>
+            <td class="text-xs-right" >{{ props.item.tmp }}℃</td>
+            <td class="text-xs-right" >{{ props.item.wind_deg }}°</td>
+            <td class="text-xs-right" >{{ props.item.wind_dir }}</td>
+            <td class="text-xs-right" >{{ props.item.wind_sc }}km/h</td>
+            <td class="text-xs-right" >{{ props.item.wind_spd }}km/h</td>
+            <td class="text-xs-right" >{{ props.item.hum }}%</td>
+            <td class="text-xs-right" >{{ props.item.pres }}pHa</td>
+            <td class="text-xs-right" >{{ props.item.pop }}%</td>
+            <td class="text-xs-right" >{{ props.item.dew }}℃</td>
+            <td class="text-xs-right" >{{ props.item.cloud }}</td>
+          </template>
+        </v-data-table>
+      </span>
+
+      <div class="tables-img">
+        <v-data-table
+          :headers="headers"
+          :items="dessert"
+          hide-actions
+        >
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.date }}</td>
+            <td>{{ props.item.cond_txt_d }}</td>
+            <td>{{ props.item.tmp_max }}</td>
+            <td>{{ props.item.tmp_min }}</td>
+            <td>{{ props.item.wind_dir }}</td>
+            <td>{{ props.item.hum }}</td>
+            <td>{{ props.item.pcpn }}</td>
+            <td>{{ props.item.pres }}</td>
+          </template>
+        </v-data-table>
+        <div class="chartmain"></div>
+      </div>
+      
     </div>
   </v-layout>
 </template>
@@ -31,116 +89,65 @@ export default {
       sound: true,
       widgets: false,
       location: '无锡',
-      header: [
-        {
-          text: '逐小时天气',
-          sortable: false
-        },
-        { text: '01:00',
-          sortable: false },
-        { text: '04:00',
-          sortable: false },
-        { text: '07:00',
-          sortable: false },
-        { text: '10:00',
-          sortable: false },
-        { text: '13:00',
-          sortable: false },
-        { text: '16:00',
-          sortable: false },
-        { text: '19:00',
-          sortable: false },
-        { text: '22:00',
-          sortable: false }
-      ],
-      dessert: [
-        {
-          value: false,
-          name: '天气状况',
-          calories: '晴',
-          fat: '晴',
-          carbs: '晴',
-          protein: '晴',
-          iron: '晴',
-          sss: '晴',
-          ddd: '晴',
-          fff: '晴'
-        },
-        {
-          value: false,
-          name: '温度',
-          calories: 215,
-          fat: 215,
-          carbs: 215,
-          protein: 215,
-          iron: 215,
-          sss: 215,
-          ddd: 215,
-          fff: 215
-        },
-        {
-          value: false,
-          name: '相对湿度',
-          calories: 10,
-          fat: 10,
-          carbs: 10,
-          protein: 10,
-          iron: 10,
-          sss: 10,
-          ddd: 10,
-          fff: 10
-        }
-      ],
+
       headers: [
         {
-          text: '未来三天天气预报',
+          text: '未来七天天气预报',
           sortable: false
         },
         { text: '天气',
           sortable: false },
-        { text: '最高气温',
+        { text: '最高气温 ℃',
           sortable: false },
-        { text: '最低气温',
+        { text: '最低气温 ℃',
           sortable: false },
         { text: '风向',
           sortable: false },
-        { text: '相对湿度',
+        { text: '相对湿度 %',
           sortable: false },
-        { text: '降水量',
+        { text: '降水量 ㎡',
+          sortable: false },
+        { text: '大气压强 kPa',
           sortable: false }
       ],
-      desserts: [
-        {
-          value: false,
-          cond_txt_d: '晴',
-          date: '2019.01.04',
-          tmp_max: 0,
-          tmp_min: 0,
-          wind_dir: 0,
-          pcpn: 0,
-          hum: 0,
-          vis: 0
-        }
+      dessert: [
+        {}
       ],
       head: [
         {
-          text: '生活指数',
+          text: '逐小时预报',
           sortable: false },
-        { text: '等级',
+        {
+          text: '天气状况',
           sortable: false },
-        { text: '温馨提示',
+        { text: '温度',
+          sortable: false },
+        { text: '风向360角度',
+          sortable: false },
+        { text: '风向',
+          sortable: false },
+        { text: '风力',
+          sortable: false },
+        { text: '风速，公里/小时',
+          sortable: false },
+        { text: '相对湿度',
+          sortable: false },
+        { text: '大气压强',
+          sortable: false },
+        { text: '降水概率%',
+          sortable: false },
+        { text: '露点温度',
+          sortable: false },
+        { text: '云量',
           sortable: false }
       ],
-      content: [
-        {
-          txt: '',
-          brf: '',
-          type: ''
-        }
+      dessertItem: [
+        {}
       ],
+
       weatherData: [],
-      lifestyle: [],
-      daily_forecast: [],
+      lifestyle: '',
+      daily_forecast: {},
       daily_forecasts: [],
 
       correspond: {
@@ -157,7 +164,6 @@ export default {
   },
   mounted () {
     this.weatherForecast()
-    this.hourWeather()
   },
   methods: {
     // 默认的天气
@@ -168,166 +174,120 @@ export default {
         this.location = this.$route.params.location
       }
       let locationt = `location=${this.location}&`
-      axios.post(`${config.weatherLive}${locationt}${config.key}`)
+      axios.post(`${config.weather}${locationt}${config.key}`)
         .then(response => {
-          this.weatherData = response.data.HeWeather6[0].now
-          this.lifestyle = response.data.HeWeather6[0].lifestyle
-          this.daily_forecast = response.data.HeWeather6[0].daily_forecast[0]
-          this.daily_forecasts = response.data.HeWeather6[0].daily_forecast
-          this.desserts = this.daily_forecasts
-          this.content = response.data.HeWeather6[0].lifestyle
-          this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code}.png`)
+          console.log(response, '============')
+          this.weatherData = response.data.HeWeather6[0].daily_forecast[0]
+
+          this.lifestyle = response.data.HeWeather6[0].lifestyle[0].txt
+          this.daily_forecast = response.data.HeWeather6[0].daily_forecast[0].date
+          this.dessert = response.data.HeWeather6[0].daily_forecast
+          this.dessertItem = response.data.HeWeather6[0].hourly
+          console.log(this.dessertItem)
+          this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code_d}.png`)
         })
         .catch(error => {
           console.log(error)
           alert('请检查您的网络情况！sssdadadad')
         })
-    },
-    hourWeather () {
-      if (this.$route.params.location === undefined) {
-        this.location = this.location
-      } else {
-        this.location = this.$route.params.location
-      }
-      let locationt = `location=${this.location}&`
-      axios.post(`${config.hourWeather}${locationt}${config.key}`)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-          // alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
-        })
     }
+    // hourWeather () {
+    //   if (this.$route.params.location === undefined) {
+    //     this.location = this.location
+    //   } else {
+    //     this.location = this.$route.params.location
+    //   }
+    //   let locationt = `location=${this.location}&`
+    //   axios.post(`${config.hourWeather}${locationt}${config.key}`)
+    //     .then(response => {
+    //       console.log(response)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //       // alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
+    //     })
+    // }
   }
 }
 </script>
 
 
 <style scoped lang="less">
-  .wall{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
-    #background{
-      background: url("../static/images/preview.jpg")no-repeat;
-      -webkit-animation: dd 100s linear infinite;
-      -moz-animation: dd 100s linear infinite;
-      -o-animation: dd 100s linear infinite;
-      animation: dd 100s linear infinite;
-      background-size: cover;
-  }
-  #midground{
-      background: url("../static/images/midground.png");
-      z-index: 1;
-      -webkit-animation: cc 100s linear infinite;
-      -moz-animation: cc 100s linear infinite;
-      -o-animation: cc 100s linear infinite;
-      animation: cc 100s linear infinite;
-  }
-  #foreground{
-      background: url("../static/images/foreground.png");
-      z-index: 2;
-      -webkit-animation: cc 153s linear infinite;
-      -o-animation: cc 153s linear infinite;
-      -moz-animation: cc 153s linear infinite;
-      animation: cc 153s linear infinite;
-  }
-  #top{
-      background-image: url("../static/images/midground.png");
-      z-index: 4;
-      -webkit-animation: dd 100s linear infinite;
-      -o-animation: dd 100s linear infinite;
-      animation: da 100s linear infinite;
-  }
-  @-webkit-keyframes cc {
-      from{
-          background-position: 0 0;
-          transform: translateY(10px);
-      }
-      to{
-          background-position: 600% 0;
-      }
-  }
-  @-o-keyframes cc {
-      from{
-          background-position: 0 0;
-          transform: translateY(10px);
-      }
-      to{
-          background-position: 600% 0;
-      }
-  }
-  @-moz-keyframes cc {
-      from{
-          background-position: 0 0;
-          transform: translateY(10px);
-      }
-      to{
-          background-position: 600% 0;
-      }
-  }
-  @keyframes cc {
-      0%{
-          background-position: 0 0;
-      }
-      100%{
-          background-position: 600% 0;
-      }
-  }
-  
-  @keyframes da {
-      0%{
-          background-position: 0 0;
-      }
-      100%{
-          background-position: 0 600%;
-      }
-  }
-  @-webkit-keyframes da {
-      0%{
-          background-position: 0 0;
-      }
-      100%{
-          background-position: 0 600%;
-      }
-  }
-  @-moz-keyframes da {
-      0%{
-          background-position: 0 0;
-      }
-      100%{
-          background-position: 0 600%;
-      }
-  }
-  @-ms-keyframes da {
-      0%{
-          background-position: 0 0;
-      }
-      100%{
-          background-position: 0 600%;
-      }
-  }
-  .container {
+  .bgi {
     background-image: url('../static/bgc.png');
     z-index: 7;
     height: 380px;
-    opacity: 0.7;
+    opacity:0.6;
+    width: 100%;
+  }
     .container-title {
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
       line-height: 60px;
+      font-size: 18px;
     }
-    .container-middle {
+    .container-middle { 
+      height: 280px;
+      margin-left: 20%;
+      margin-top: 20px;
+      .secondLine {
+        font-size: 40px;
+        span{
+          font-size: 90px;
+        }
+      }
+      .weather-icon {
+        position: absolute;
+        top: 120px;
+        right: 500px;
+        img {
+          width: 150px;
+        }
+      }
+      .weather-three {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        img {
+          width: 25px;
+        }
+        .margin-span {
+          margin-left: 15px;
+        }
+      }
+      .clues {
+        margin-top: 15px;
+      }
+    }
+    .container-bg {
+      position:absolute;
+      width: 100%;
+      z-index: 9;
+    }
+    .container-table {
+      position: absolute;
+      top: 380px;
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-around;
-      text-align: center;
-      height: 280px;
+      justify-content: center;
+      margin-top: 15px;
+      span {
+        width: 80%;
+      }
     }
-  }
+    .tables-img {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      margin-top: 15px;
+      .chartmain {
+        width: 600px;
+        height: 393px;
+        background-color: rgb(184, 30, 30);
+      }
+    }
+    .v-table {
+      background-color: #4dd3a6;
+    }
 </style>

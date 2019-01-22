@@ -140,7 +140,11 @@ export default {
       let location = `location=${this.message}&`
       axios.get(`${config.searchCity}${location}${config.group}${config.key}`)
         .then(response => {
-          this.citySearchList = response.data.HeWeather6[0].basic
+          if (location === '' || response.data.HeWeather6[0].status === 'param invalid' || response.data.HeWeather6[0].status === 'unknown location') {
+            alert('未找到地址，请重新输入')
+          } else {
+            this.citySearchList = response.data.HeWeather6[0].basic
+          }
         })
         .catch(error => {
           console.log(error)
