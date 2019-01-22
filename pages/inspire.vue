@@ -215,9 +215,9 @@ export default {
 <style scoped lang="less">
   .bgi {
     background-image: url('../static/bgc.png');
+    position: fixed;
     z-index: 7;
     height: 380px;
-    opacity:0.6;
     width: 100%;
   }
     .container-title {
