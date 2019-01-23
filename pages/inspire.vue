@@ -5,11 +5,20 @@
 
     <div class="container-bg">
       <div class="container-title">
-        <div>当前位置</div>
-        <div>点击这里，返回首页</div>
+        <div>当前位置
+          <span>
+            {{this.location}}
+          </span>
+        </div>
+          <v-btn
+            color="info"
+            href="/"
+          >
+            点击这里，返回首页
+         </v-btn>
       </div>
       <div class="container-middle">
-        <div>{{this.weatherData.date}}</div>
+        <div>更新时间：{{this.dataLoc.loc}}</div>
         <div class="secondLine">
             <span>{{this.weatherData.tmp_min}}~{{this.weatherData.tmp_max}}</span>
             ℃
@@ -17,6 +26,10 @@
         
         <div class="weather-icon">
           <img :src="imgUrlToday">
+          <div>
+            <span>日出：</span>
+            <span>日落：</span>
+          </div>
         </div>
 
         <div class="weather-three">
@@ -35,43 +48,65 @@
           :headers="head"
           :items="dessertItem"
           class="elevation-1"
+          light
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-right" >{{ props.item.time }}</td>
-            <td class="text-xs-right" >{{ props.item.cond_txt }}</td>
-            <td class="text-xs-right" >{{ props.item.tmp }}℃</td>
-            <td class="text-xs-right" >{{ props.item.wind_deg }}°</td>
-            <td class="text-xs-right" >{{ props.item.wind_dir }}</td>
-            <td class="text-xs-right" >{{ props.item.wind_sc }}km/h</td>
-            <td class="text-xs-right" >{{ props.item.wind_spd }}km/h</td>
-            <td class="text-xs-right" >{{ props.item.hum }}%</td>
-            <td class="text-xs-right" >{{ props.item.pres }}pHa</td>
-            <td class="text-xs-right" >{{ props.item.pop }}%</td>
-            <td class="text-xs-right" >{{ props.item.dew }}℃</td>
-            <td class="text-xs-right" >{{ props.item.cloud }}</td>
+            <td class="text-xs-content" >{{ props.item.time }}</td>
+            <td class="text-xs-content" >{{ props.item.cond_txt }}</td>
+            <td class="text-xs-content" >{{ props.item.tmp }}℃</td>
+            <td class="text-xs-content" >{{ props.item.wind_deg }}°</td>
+            <td class="text-xs-content" >{{ props.item.wind_dir }}</td>
+            <td class="text-xs-content" >{{ props.item.wind_sc }}km/h</td>
+            <td class="text-xs-content" >{{ props.item.wind_spd }}km/h</td>
+            <td class="text-xs-content" >{{ props.item.hum }}%</td>
+            <td class="text-xs-content" >{{ props.item.pres }}pHa</td>
+            <td class="text-xs-content" >{{ props.item.pop }}%</td>
+            <td class="text-xs-content" >{{ props.item.dew }}℃</td>
+            <td class="text-xs-content" >{{ props.item.cloud }}</td>
           </template>
         </v-data-table>
       </span>
 
       <div class="tables-img">
+        <div>
+          <v-data-table
+            :headers="headers"
+            :items="dessert"
+            hide-actions
+            light
+          >
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.date }}</td>
+              <td>{{ props.item.cond_txt_d }}</td>
+              <td>{{ props.item.tmp_max }}</td>
+              <td>{{ props.item.tmp_min }}</td>
+              <td>{{ props.item.wind_dir }}</td>
+              <td>{{ props.item.hum }}</td>
+              <td>{{ props.item.pcpn }}</td>
+              <td>{{ props.item.pres }}</td>
+            </template>
+          </v-data-table>
+        </div>
+        <div class="chartmain">
+          <img src="https://api.heweather.net/s6/map/cloudmap?&key=bba03ec977704452bb0fcf9907cb6a82"/>
+        </div>
+      </div>
+
+      <span>
         <v-data-table
-          :headers="headers"
-          :items="dessert"
+          :headers="header"
+          :items="desser"
+          class="elevation-1"
           hide-actions
+          light
         >
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.date }}</td>
-            <td>{{ props.item.cond_txt_d }}</td>
-            <td>{{ props.item.tmp_max }}</td>
-            <td>{{ props.item.tmp_min }}</td>
-            <td>{{ props.item.wind_dir }}</td>
-            <td>{{ props.item.hum }}</td>
-            <td>{{ props.item.pcpn }}</td>
-            <td>{{ props.item.pres }}</td>
+            <td class="text-xs-content" >{{ correspond[props.item.type] }}</td>
+            <td class="text-xs-content" >{{ props.item.brf }}</td>
+            <td class="text-xs-content" >{{ props.item.txt }}</td>
           </template>
         </v-data-table>
-        <div class="chartmain"></div>
-      </div>
+      </span>
       
     </div>
   </v-layout>
@@ -145,10 +180,28 @@ export default {
         {}
       ],
 
+      header: [
+        {
+          text: '类型',
+          sortable: false
+        },
+        { text: '简介',
+          sortable: false },
+        { text: '详述',
+          sortable: false }
+      ],
+      desser: [
+        {
+          txt: '',
+          brf: '',
+          type: ''
+        }
+      ],
+
       weatherData: [],
       lifestyle: '',
       daily_forecast: {},
-      daily_forecasts: [],
+      dataLoc: {},
 
       correspond: {
         comf: '舒适度指数',
@@ -158,12 +211,21 @@ export default {
         sport: '运动指数',
         trav: '旅游指数',
         uv: '紫外线指数',
-        air: '空气污染扩散条件指数'
+        air: '空气污染扩散条件指数',
+        ac: '空调开启指数',
+        ag: '过敏指数',
+        gl: '太阳镜指数',
+        mu: '化妆指数',
+        airc: '晾晒指数',
+        ptfc: '交通指数',
+        fsh: '钓鱼指数',
+        spi: '防晒指数'
       }
     }
   },
   mounted () {
     this.weatherForecast()
+    this.hourWeather()
   },
   methods: {
     // 默认的天气
@@ -176,37 +238,29 @@ export default {
       let locationt = `location=${this.location}&`
       axios.post(`${config.weather}${locationt}${config.key}`)
         .then(response => {
-          console.log(response, '============')
           this.weatherData = response.data.HeWeather6[0].daily_forecast[0]
-
           this.lifestyle = response.data.HeWeather6[0].lifestyle[0].txt
           this.daily_forecast = response.data.HeWeather6[0].daily_forecast[0].date
           this.dessert = response.data.HeWeather6[0].daily_forecast
           this.dessertItem = response.data.HeWeather6[0].hourly
-          console.log(this.dessertItem)
+          this.dataLoc = response.data.HeWeather6[0].update
           this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code_d}.png`)
+          this.desser = response.data.HeWeather6[0].lifestyle
         })
         .catch(error => {
           console.log(error)
-          alert('请检查您的网络情况！sssdadadad')
+          alert('请检查您的网络情况！')
+        })
+    },
+    hourWeather () {
+      axios.post(`${config.img}${config.key}`)
+        .then(response => {
+        })
+        .catch(error => {
+          console.log(error)
+          alert('请检查您的网络情况！')
         })
     }
-    // hourWeather () {
-    //   if (this.$route.params.location === undefined) {
-    //     this.location = this.location
-    //   } else {
-    //     this.location = this.$route.params.location
-    //   }
-    //   let locationt = `location=${this.location}&`
-    //   axios.post(`${config.hourWeather}${locationt}${config.key}`)
-    //     .then(response => {
-    //       console.log(response)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //       // alert('请检查您的网络情况！wwwwwwwwwwwwwwwwww')
-    //     })
-    // }
   }
 }
 </script>
@@ -216,8 +270,7 @@ export default {
   .bgi {
     background-image: url('../static/bgc.png');
     position: fixed;
-    z-index: 7;
-    height: 380px;
+    height: 500px;
     width: 100%;
   }
     .container-title {
@@ -226,6 +279,11 @@ export default {
       justify-content: space-around;
       line-height: 60px;
       font-size: 18px;
+      margin-top: 30px;
+      span {
+        font-size: 30px;
+        margin-left: 15px;
+      }
     }
     .container-middle { 
       height: 280px;
@@ -241,6 +299,7 @@ export default {
         position: absolute;
         top: 120px;
         right: 500px;
+        text-align: center;
         img {
           width: 150px;
         }
@@ -267,13 +326,14 @@ export default {
     }
     .container-table {
       position: absolute;
-      top: 380px;
+      top: 400px;
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
-      margin-top: 15px;
       span {
+        box-shadow: 2px -1px 8px #5e5d5d;
         width: 80%;
+        margin-top: 15px;
       }
     }
     .tables-img {
@@ -281,10 +341,17 @@ export default {
       flex-flow: row wrap;
       justify-content: center;
       margin-top: 15px;
+      div {
+        box-shadow: 2px -1px 8px #5e5d5d;
+      }
       .chartmain {
         width: 600px;
         height: 393px;
-        background-color: rgb(184, 30, 30);
+        margin-left: 40px;
+        img {
+          width: 600px;
+          height: 393px;
+        }
       }
     }
     .v-table {
