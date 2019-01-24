@@ -273,6 +273,7 @@ export default {
 <style scoped lang="less">
   .bgi {
     position: fixed;
+    width: 100%;
     img{
       height: 500px;
       width: 100%;
