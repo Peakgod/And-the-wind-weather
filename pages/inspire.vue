@@ -39,7 +39,7 @@
           <span class="margin-span">湿度<span>&nbsp;&nbsp;&nbsp;</span>{{this.weatherData.hum}}%</span>
           <span class="margin-span">气压<span>&nbsp;&nbsp;&nbsp;</span>{{this.weatherData.pres}}hPa</span>
         </div>
-        <div class="clues">提示语：{{this.lifestyle}}</div>
+        <div class="clues">请注意：{{this.lifestyle}}</div>
       </div>
     </div>
 
