@@ -1,6 +1,7 @@
 <template>
   <v-layout>
     <div class="bgi">
+      <img src="~/static/bgc.png"/>
     </div>
 
     <div class="container-bg">
@@ -27,8 +28,8 @@
         <div class="weather-icon">
           <img :src="imgUrlToday">
           <div>
-            <span>日出：</span>
-            <span>日落：</span>
+            <span>日出：{{this.sunriseSunset.sr}}</span>
+            <span>日落：{{this.sunriseSunset.ss}}</span>
           </div>
         </div>
 
@@ -68,7 +69,7 @@
       </span>
 
       <div class="tables-img">
-        <div>
+        <div class="sevenDays">
           <v-data-table
             :headers="headers"
             :items="dessert"
@@ -76,17 +77,18 @@
             light
           >
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.date }}</td>
-              <td>{{ props.item.cond_txt_d }}</td>
-              <td>{{ props.item.tmp_max }}</td>
-              <td>{{ props.item.tmp_min }}</td>
-              <td>{{ props.item.wind_dir }}</td>
-              <td>{{ props.item.hum }}</td>
-              <td>{{ props.item.pcpn }}</td>
-              <td>{{ props.item.pres }}</td>
+              <td class="text-xl-content">{{ props.item.date }}</td>
+              <td class="text-xl-content">{{ props.item.cond_txt_d }}</td>
+              <td class="text-xl-content">{{ props.item.tmp_max }}</td>
+              <td class="text-xl-content">{{ props.item.tmp_min }}</td>
+              <td class="text-xl-content">{{ props.item.wind_dir }}</td>
+              <td class="text-xl-content">{{ props.item.hum }}</td>
+              <td class="text-xl-content">{{ props.item.pcpn }}</td>
+              <td class="text-xl-content">{{ props.item.pres }}</td>
             </template>
           </v-data-table>
         </div>
+
         <div class="chartmain">
           <img src="https://api.heweather.net/s6/map/cloudmap?&key=bba03ec977704452bb0fcf9907cb6a82"/>
         </div>
@@ -202,6 +204,7 @@ export default {
       lifestyle: '',
       daily_forecast: {},
       dataLoc: {},
+      sunriseSunset: {},
 
       correspond: {
         comf: '舒适度指数',
@@ -246,6 +249,7 @@ export default {
           this.dataLoc = response.data.HeWeather6[0].update
           this.imgUrlToday = require(`~/assets/inco-weather/${this.weatherData.cond_code_d}.png`)
           this.desser = response.data.HeWeather6[0].lifestyle
+          this.sunriseSunset = response.data.HeWeather6[0].daily_forecast[0]
         })
         .catch(error => {
           console.log(error)
@@ -268,26 +272,29 @@ export default {
 
 <style scoped lang="less">
   .bgi {
-    background-image: url('../static/bgc.png');
     position: fixed;
-    height: 500px;
-    width: 100%;
-  }
-    .container-title {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-around;
-      line-height: 60px;
-      font-size: 18px;
-      margin-top: 30px;
-      span {
-        font-size: 30px;
-        margin-left: 15px;
-      }
+    img{
+      height: 500px;
+      width: 100%;
     }
+  }
+  .container-title {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    line-height: 60px;
+    font-size: 18px;
+    margin-top: 30px;
+    margin-left: 15%;
+    span {
+      font-size: 30px;
+      margin-left: 15px;
+    }
+  }
     .container-middle { 
       height: 280px;
       margin-left: 20%;
+      margin-right: 20%;
       margin-top: 20px;
       .secondLine {
         font-size: 40px;
@@ -320,7 +327,7 @@ export default {
       }
     }
     .container-bg {
-      position:absolute;
+      position: fixed;
       width: 100%;
       z-index: 9;
     }
@@ -330,6 +337,7 @@ export default {
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
+      z-index: 10;
       span {
         box-shadow: 2px -1px 8px #5e5d5d;
         width: 80%;
@@ -339,22 +347,80 @@ export default {
     .tables-img {
       display: flex;
       flex-flow: row wrap;
-      justify-content: center;
+      justify-content: space-between;
       margin-top: 15px;
-      div {
-        box-shadow: 2px -1px 8px #5e5d5d;
+      width: 80%;
+      .sevenDays {
+        box-shadow: 2px -1px 8px #5e5d5d; 
+        width: 67%;
       }
       .chartmain {
-        width: 600px;
+        width: 32%;
         height: 393px;
-        margin-left: 40px;
         img {
-          width: 600px;
+          width: 100%;
           height: 393px;
         }
       }
     }
     .v-table {
       background-color: #4dd3a6;
+    }
+    @media (max-width: 1590px) {
+      .container-middle {
+        .weather-icon {
+          right: 300px
+        }
+      }
+      .tables-img {
+        .sevenDays {
+          width: 100%;
+        }
+        .chartmain {
+          margin-top: 15px;
+          width: 100%;
+          height: 525px;
+          img {
+            width: 100%;
+            height: 525px;
+          }
+        }
+      }
+    }
+    @media (max-width: 1123px) {
+      .container-middle {
+        .weather-icon {
+          right: 130px
+        }
+      }
+      .tables-img {
+        .chartmain {
+          margin-top: 15px;
+          width: 100%;
+          height: 400px;
+          margin-left: 0;
+          img {
+            width: 100%;
+            height: 400px;
+          }
+        }
+      }
+    }
+    @media (max-width: 998px) {
+      .container-middle {
+        .weather-icon {
+          right: 150px;
+        }
+      }
+    }
+    @media (max-width: 779px) {
+      .container-middle {
+        .weather-icon {
+          right: 150px;
+        }
+      }
+      .container-title {
+        margin-left: 5%;
+      }
     }
 </style>
