@@ -81,14 +81,14 @@
       </div>
       
     </div>
-
+<!-- 
     <div id="prompt-r">
       <img src="~/static/tu1.png" class="prompt"/>
       <div class='is-animate style3'>
         <p class="prompt-text">小狐提醒您</p>
         <p class="prompt-text">时刻注意天气哟！</p>
       </div>
-    </div>
+    </div> -->
 
   </v-layout>
 </template>
@@ -219,7 +219,7 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     .middle-style{
-      padding: 8px;
+      margin: 8px;
       position: relative;
       text-align: center;
       img {
@@ -296,285 +296,310 @@ export default {
     opacity: 1;
   }
 
+  .slideshow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
   
-.slideshow {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-#slideshow-image-noe {
- background-image: url('../static/images/1.jpg')
-}
-#slideshow-image-tow {
-  background-image: url('../static/images/2.jpg')
-}
-#slideshow-image-three {
-  background-image: url('../static/images/3.jpg')
-}
-#slideshow-image-four {
-  background-image: url('../static/images/4.jpg')
-}
-.slideshow-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: no-repeat 50% 50%;
-  background-size: cover;
-  -webkit-animation-name: kenburns;
-          animation-name: kenburns;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 16s;
-          animation-duration: 16s;
-  opacity: 1;
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-}
-.slideshow-image:nth-child(1) {
-  -webkit-animation-name: kenburns-1;
-          animation-name: kenburns-1;
-  z-index: 3;
-}
-.slideshow-image:nth-child(2) {
-  -webkit-animation-name: kenburns-2;
-          animation-name: kenburns-2;
-  z-index: 2;
-}
-.slideshow-image:nth-child(3) {
-  -webkit-animation-name: kenburns-3;
-          animation-name: kenburns-3;
-  z-index: 1;
-}
-.slideshow-image:nth-child(4) {
-  -webkit-animation-name: kenburns-4;
-          animation-name: kenburns-4;
-  z-index: 0;
-}
-
-@-webkit-keyframes kenburns-1 {
-  0% {
+  #slideshow-image-noe {
+   background-image: url('../static/images/1.jpg')
+  }
+  #slideshow-image-tow {
+    background-image: url('../static/images/2.jpg')
+  }
+  #slideshow-image-three {
+    background-image: url('../static/images/3.jpg')
+  }
+  #slideshow-image-four {
+    background-image: url('../static/images/4.jpg')
+  }
+  .slideshow-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: no-repeat 50% 50%;
+    background-size: cover;
+    -webkit-animation-name: kenburns;
+            animation-name: kenburns;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+    -webkit-animation-duration: 16s;
+            animation-duration: 16s;
     opacity: 1;
     -webkit-transform: scale(1.2);
             transform: scale(1.2);
   }
-  1.5625% {
-    opacity: 1;
+  .slideshow-image:nth-child(1) {
+    -webkit-animation-name: kenburns-1;
+            animation-name: kenburns-1;
+    z-index: 3;
   }
-  23.4375% {
-    opacity: 1;
+  .slideshow-image:nth-child(2) {
+    -webkit-animation-name: kenburns-2;
+            animation-name: kenburns-2;
+    z-index: 2;
   }
-  26.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+  .slideshow-image:nth-child(3) {
+    -webkit-animation-name: kenburns-3;
+            animation-name: kenburns-3;
+    z-index: 1;
   }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+  .slideshow-image:nth-child(4) {
+    -webkit-animation-name: kenburns-4;
+            animation-name: kenburns-4;
+    z-index: 0;
   }
-  98.4375% {
-    opacity: 0;
-    -webkit-transform: scale(1.21176);
-            transform: scale(1.21176);
+  
+  @-webkit-keyframes kenburns-1 {
+    0% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    1.5625% {
+      opacity: 1;
+    }
+    23.4375% {
+      opacity: 1;
+    }
+    26.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    98.4375% {
+      opacity: 0;
+      -webkit-transform: scale(1.21176);
+              transform: scale(1.21176);
+    }
+    100% {
+      opacity: 1;
+    }
   }
-  100% {
-    opacity: 1;
+  
+  @keyframes kenburns-1 {
+    0% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    1.5625% {
+      opacity: 1;
+    }
+    23.4375% {
+      opacity: 1;
+    }
+    26.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    98.4375% {
+      opacity: 0;
+      -webkit-transform: scale(1.21176);
+              transform: scale(1.21176);
+    }
+    100% {
+      opacity: 1;
+    }
   }
-}
-
-@keyframes kenburns-1 {
-  0% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+  @-webkit-keyframes kenburns-2 {
+    23.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    26.5625% {
+      opacity: 1;
+    }
+    48.4375% {
+      opacity: 1;
+    }
+    51.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
   }
-  1.5625% {
-    opacity: 1;
+  @keyframes kenburns-2 {
+    23.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    26.5625% {
+      opacity: 1;
+    }
+    48.4375% {
+      opacity: 1;
+    }
+    51.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
   }
-  23.4375% {
-    opacity: 1;
+  @-webkit-keyframes kenburns-3 {
+    48.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    51.5625% {
+      opacity: 1;
+    }
+    73.4375% {
+      opacity: 1;
+    }
+    76.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
   }
-  26.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+  @keyframes kenburns-3 {
+    48.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    51.5625% {
+      opacity: 1;
+    }
+    73.4375% {
+      opacity: 1;
+    }
+    76.5625% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
   }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+  @-webkit-keyframes kenburns-4 {
+    73.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    76.5625% {
+      opacity: 1;
+    }
+    98.4375% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
   }
-  98.4375% {
-    opacity: 0;
-    -webkit-transform: scale(1.21176);
-            transform: scale(1.21176);
+  @keyframes kenburns-4 {
+    73.4375% {
+      opacity: 1;
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+    }
+    76.5625% {
+      opacity: 1;
+    }
+    98.4375% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
   }
-  100% {
-    opacity: 1;
+  
+  
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);
+    z-index: 99;
+    text-align: center;
+    font-family: Raleway, sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 1em 2em -1em rgba(0, 0, 0, 0.5);
+    padding: 1em 2em;
+    line-height: 1.5;
   }
-}
-@-webkit-keyframes kenburns-2 {
-  23.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+  h1 small {
+    display: block;
+    text-transform: lowercase;
+    font-size: .7em;
   }
-  26.5625% {
-    opacity: 1;
+  h1 small:first-child {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    padding-bottom: .5em;
   }
-  48.4375% {
-    opacity: 1;
+  h1 small:last-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    padding-top: .5em;
   }
-  51.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+  @media (max-width: 600px) {
+    .content-right{
+      left: 5%;
+      max-width: 540px;
+    }
+    .content-right
+    .content-right-top {
+      justify-content: end;
+    }
+    .content-right-btn{
+      top: 6.5%
+    }
+    .content-address-icon{
+      display: none;
+    }
+    .content-right-middle{
+      justify-content: center;
+      margin: 0;
+      .middle-right{
+        display: none;
+        width: auto;
+        left: 5%;
+        right: 5%;
+      }
+    }
   }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-@keyframes kenburns-2 {
-  23.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-  26.5625% {
-    opacity: 1;
-  }
-  48.4375% {
-    opacity: 1;
-  }
-  51.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-@-webkit-keyframes kenburns-3 {
-  48.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-  51.5625% {
-    opacity: 1;
-  }
-  73.4375% {
-    opacity: 1;
-  }
-  76.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-@keyframes kenburns-3 {
-  48.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-  51.5625% {
-    opacity: 1;
-  }
-  73.4375% {
-    opacity: 1;
-  }
-  76.5625% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-@-webkit-keyframes kenburns-4 {
-  73.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-  76.5625% {
-    opacity: 1;
-  }
-  98.4375% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-@keyframes kenburns-4 {
-  73.4375% {
-    opacity: 1;
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-  76.5625% {
-    opacity: 1;
-  }
-  98.4375% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
-
-h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate3d(-50%, -50%, 0);
-          transform: translate3d(-50%, -50%, 0);
-  z-index: 99;
-  text-align: center;
-  font-family: Raleway, sans-serif;
-  font-weight: 300;
-  text-transform: uppercase;
-  background-color: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 1em 2em -1em rgba(0, 0, 0, 0.5);
-  padding: 1em 2em;
-  line-height: 1.5;
-}
-h1 small {
-  display: block;
-  text-transform: lowercase;
-  font-size: .7em;
-}
-h1 small:first-child {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  padding-bottom: .5em;
-}
-h1 small:last-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.25);
-  padding-top: .5em;
-}
 </style>
